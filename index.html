@@ -1714,7 +1714,11 @@ Solstice purpose.</strong><span>Source records preserve reported uncertainty and
     control.addEventListener('change',()=>{visibleLimit=12;apply();});
   });
   byId('reset-filters').addEventListener('click',()=>{clearFilters();visibleLimit=12;apply();});
-  more.addEventListener('click',()=>{visibleLimit+=12;apply();more.focus();});
+  more.addEventListener('click',()=>{
+    const next=sortCards(cards.filter(matches))[visibleLimit];
+    visibleLimit+=12;apply();
+    if(next){next.tabIndex=-1;next.focus({preventScroll:true});next.scrollIntoView({block:'start'});}
+  });
 
     document.addEventListener('change',event=>{
     const box=event.target.closest&&event.target.closest('input[data-compare]');
